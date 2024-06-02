@@ -11,6 +11,13 @@ import (
 // CVEs is an evolving list of popular webspam attack requests.
 var CVEs = map[string]string{
 	"/cgi-bin/luci/;stok=/locale": "CVE-2023-1389",
+	"/cgi-bin/authLogin.cgi":      "CVE-2017-6361",
+}
+
+// CVEPrefixes list some common  attempt requests.
+var CVEPrefixes = map[string]string{
+	"/wp-content/plugins/": "CVE-2024-27956",
+	"/.aws/":               "CWE-200",
 }
 
 // CWE200Suffixes list some common CWE-200 attempt requests.
@@ -18,6 +25,7 @@ var CWE200Suffixes = []string{
 	"/.env",
 	"/.git/config",
 	"/.svn/entries",
+	"/.aws/",
 }
 
 // CVE returns a known string token that can explain what the
@@ -26,6 +34,11 @@ func CVE(path string) string {
 	s, hit := CVEs[path]
 	if hit {
 		return s
+	}
+	for p, s := range CVEPrefixes {
+		if strings.HasPrefix(path, p) {
+			return s
+		}
 	}
 	for _, s := range CWE200Suffixes {
 		if strings.HasSuffix(path, s) {
