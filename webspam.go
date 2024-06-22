@@ -12,12 +12,16 @@ import (
 var CVEs = map[string]string{
 	"/cgi-bin/luci/;stok=/locale": "CVE-2023-1389",
 	"/cgi-bin/authLogin.cgi":      "CVE-2017-6361",
+	"/config.json":                "CVE-2019-6340",
 }
 
 // CVEPrefixes list some common  attempt requests.
 var CVEPrefixes = map[string]string{
-	"/wp-content/plugins/": "CVE-2024-27956",
-	"/.aws/":               "CWE-200",
+	"/.aws/":                   "CWE-200",
+	"/actuator/gateway/routes": "CVE-2022-22947",
+	"/owa/":                    "CVE-2022-24637",
+	"/public/index.php":        "CVE-2020-23376",
+	"/wp-content/plugins/":     "CVE-2024-27956",
 }
 
 // CWE200Suffixes list some common CWE-200 attempt requests.
