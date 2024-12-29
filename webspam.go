@@ -10,9 +10,10 @@ import (
 
 // CVEs is an evolving list of popular webspam attack requests.
 var CVEs = map[string]string{
-	"/cgi-bin/luci/;stok=/locale": "CVE-2023-1389",
 	"/cgi-bin/authLogin.cgi":      "CVE-2017-6361",
+	"/_profiler/phpinfo":          "CVE-2017-9841", // https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-016a
 	"/config.json":                "CVE-2019-6340",
+	"/cgi-bin/luci/;stok=/locale": "CVE-2023-1389",
 }
 
 // CVEPrefixes list some common  attempt requests.
@@ -22,6 +23,7 @@ var CVEPrefixes = map[string]string{
 	"/owa/":                    "CVE-2022-24637",
 	"/public/index.php":        "CVE-2020-23376",
 	"/wp-content/plugins/":     "CVE-2024-27956",
+	"/dana-":                   "CVE-2021-22893",
 }
 
 // CWE200Suffixes list some common CWE-200 attempt requests.
