@@ -15,11 +15,14 @@ var CVEs = map[string]string{
 	"/config.json":                          "CVE-2019-6340",
 	"/cgi-bin/luci/;stok=/locale":           "CVE-2023-1389",
 	"/dana-na/auth/url_default/welcome.cgi": "CVE-2019-11510",
+	"/wp-admin/admin-ajax.php":              "CVE-2024-2879",
+	"/dns-query":                            "CVE-2024-12705",
 }
 
 // CVEPrefixes list some common  attempt requests.
 var CVEPrefixes = map[string]string{
 	"/.aws/":                   "CWE-200",
+	"/.env.":                   "CWE-200",
 	"/actuator/gateway/routes": "CVE-2022-22947",
 	"/owa/":                    "CVE-2022-24637",
 	"/public/index.php":        "CVE-2020-23376",
