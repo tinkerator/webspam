@@ -46,8 +46,8 @@ func (t *testHeader) WriteHeader(code int) {
 
 func TestError(t *testing.T) {
 	ses := map[string]string{
-		"/site/.env":                  "404 page not found (CWE-200)\n",
-		"/cgi-bin/luci/;stok=/locale": "404 page not found (CVE-2023-1389)\n",
+		"/site/.env":                  "429 spam detected (CWE-200)\n",
+		"/cgi-bin/luci/;stok=/locale": "429 spam detected (CVE-2023-1389)\n",
 	}
 	for p, want := range ses {
 		w := &testHeader{}
@@ -58,8 +58,8 @@ func TestError(t *testing.T) {
 			t.Fatalf("bad test vector path %q: %v", p, err)
 		}
 		if spam := ErrorCVE(w, r); spam {
-			if w.code != http.StatusNotFound {
-				t.Errorf("status code: got=%d want=%d", w.code, http.StatusNotFound)
+			if w.code != http.StatusTooManyRequests {
+				t.Errorf("status code: got=%d want=%d", w.code, http.StatusTooManyRequests)
 			}
 			if got := w.b.String(); got != want {
 				t.Errorf("response got=%q, want=%q", got, want)

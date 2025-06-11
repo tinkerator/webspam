@@ -7,6 +7,9 @@ we've seen on zappem.net some patterns are more common than
 others. This package summarizes them and provides a way to classify
 them.
 
+Consistent with some suggestions on the web, we use the 429 status
+code when detecting spam.
+
 ## License info
 
 The `webspam` package is distributed with the same BSD 3-clause

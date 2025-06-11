@@ -10,10 +10,11 @@ import (
 
 // CVEs is an evolving list of popular webspam attack requests.
 var CVEs = map[string]string{
-	"/cgi-bin/authLogin.cgi":      "CVE-2017-6361",
-	"/_profiler/phpinfo":          "CVE-2017-9841", // https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-016a
-	"/config.json":                "CVE-2019-6340",
-	"/cgi-bin/luci/;stok=/locale": "CVE-2023-1389",
+	"/cgi-bin/authLogin.cgi":                "CVE-2017-6361",
+	"/_profiler/phpinfo":                    "CVE-2017-9841", // https://www.cisa.gov/news-events/cybersecurity-advisories/aa24-016a
+	"/config.json":                          "CVE-2019-6340",
+	"/cgi-bin/luci/;stok=/locale":           "CVE-2023-1389",
+	"/dana-na/auth/url_default/welcome.cgi": "CVE-2019-11510",
 }
 
 // CVEPrefixes list some common  attempt requests.
@@ -54,11 +55,20 @@ func CVE(path string) string {
 	return ""
 }
 
+// SaySpam sets a dissatisfied response.
+func SaySpam(w http.ResponseWriter, s string) {
+	w.Header().Set("Retry-After", "82847")
+	if s == "" {
+		http.Error(w, "429 stop that", http.StatusTooManyRequests)
+		return
+	}
+	http.Error(w, fmt.Sprint("429 spam detected (", s, ")"), http.StatusTooManyRequests)
+}
+
 // ErrorCVE is a handy way to intercept some common attack vectors.
 func ErrorCVE(w http.ResponseWriter, r *http.Request) bool {
-	s := CVE(r.URL.Path)
-	if s != "" {
-		http.Error(w, fmt.Sprint("404 page not found (", s, ")"), http.StatusNotFound)
+	if s := CVE(r.URL.Path); s != "" {
+		SaySpam(w, s)
 		return true
 	}
 	return false
