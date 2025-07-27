@@ -17,17 +17,29 @@ var CVEs = map[string]string{
 	"/dana-na/auth/url_default/welcome.cgi": "CVE-2019-11510",
 	"/wp-admin/admin-ajax.php":              "CVE-2024-2879",
 	"/dns-query":                            "CVE-2024-12705",
+	"/solr/admin/cores":                     "CVE-2019-17558",
+	"/remote/logincheck/":                   "CVE-2023-27997",
+	"/+CSCOE+/logon.html":                   "CVE-2011-3285",
+	"/hello.world":                          "CVE-2024-4577",
+	"/administrator/components/com_maian15/charts/php-ofc-library/ofc_upload_image.php": "CVE-2009-4140",
 }
 
-// CVEPrefixes list some common  attempt requests.
+// CVEPrefixes list some common attempt requests.
 var CVEPrefixes = map[string]string{
 	"/.aws/":                   "CWE-200",
 	"/.env.":                   "CWE-200",
+	"/.env-":                   "CWE-200",
 	"/actuator/gateway/routes": "CVE-2022-22947",
 	"/owa/":                    "CVE-2022-24637",
 	"/public/index.php":        "CVE-2020-23376",
 	"/wp-content/plugins/":     "CVE-2024-27956",
 	"/dana-":                   "CVE-2021-22893",
+}
+
+// CVESuffixes list some common attempt requests.
+var CVESuffixes = map[string]string{
+	"scripts/setup.php": "CVE-2010-3055",
+	".php":              "CVE-2024-4577",
 }
 
 // CWE200Suffixes list some common CWE-200 attempt requests.
@@ -53,6 +65,11 @@ func CVE(path string) string {
 	for _, s := range CWE200Suffixes {
 		if strings.HasSuffix(path, s) {
 			return "CWE-200"
+		}
+	}
+	for p, s := range CVESuffixes {
+		if strings.HasSuffix(path, p) {
+			return s
 		}
 	}
 	return ""
