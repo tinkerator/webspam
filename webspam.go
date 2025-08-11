@@ -40,6 +40,7 @@ var CVEPrefixes = map[string]string{
 var CVESuffixes = map[string]string{
 	"scripts/setup.php": "CVE-2010-3055",
 	".php":              "CVE-2024-4577",
+	"/metadata":         "CVE-2024-28255",
 }
 
 // CWE200Suffixes list some common CWE-200 attempt requests.
