@@ -43,6 +43,21 @@ var CVESuffixes = map[string]string{
 	"/metadata":         "CVE-2024-28255",
 }
 
+// CWE200Prefixes list some common CWE-200 attempt requests.
+var CWE200Prefixes = []string{
+	"/.env",
+	"/.git",
+	"/.svn",
+	"/.aws",
+	"/wordpress/",
+	"/blog/",
+	"/wp/",
+	"/wp-json",
+	"/api/",
+	"/fetch",
+	"/proxy",
+}
+
 // CWE200Suffixes list some common CWE-200 attempt requests.
 var CWE200Suffixes = []string{
 	"/.env",
@@ -61,6 +76,11 @@ func CVE(path string) string {
 	for p, s := range CVEPrefixes {
 		if strings.HasPrefix(path, p) {
 			return s
+		}
+	}
+	for _, s := range CWE200Prefixes {
+		if strings.HasPrefix(path, s) {
+			return "CWE-200"
 		}
 	}
 	for _, s := range CWE200Suffixes {
